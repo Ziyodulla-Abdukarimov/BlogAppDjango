@@ -18,8 +18,7 @@ class CustomUser(AbstractUser):
     }
 
     user_type_data = ((HOD, "HOD"), (STAFF, "Staff"), (STUDENT, "Client"))
-    user_type = models.CharField(
-        default=1, choices=user_type_data, max_length=10)
+    user_type = models.CharField(default=1, choices=user_type_data, max_length=10)
 
 
 class AdminHOD(models.Model):
@@ -28,36 +27,40 @@ class AdminHOD(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
-    created_at = models.DateTimeField(auto_now_add=True)
-
 
 class Staffs(models.Model):
     id = models.AutoField(primary_key=True)
-    admin = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name='staff')
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='staff')
     address = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
-    created_at = models.DateTimeField(auto_now_add=True)
-
 
 class Client(models.Model):
-    admin = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name='client')
     id = models.AutoField(primary_key=True)
-    point = models.IntegerField(default=0)
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='client')
+    profile_pic = models.ImageField(null=True, blank=True)
     date = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ('-point', 'date')
 
     def __str__(self):
         return self.admin.username
+
+
+class Blog(models.Model):
+    author = models.ForeignKey(Client, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    sumary = models.CharField(max_length=150)
+    image  = models.ImageField(null=True, blank=True)
+    body = models.CharField(max_length=1500)
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(Client, models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=500)
 
 
 

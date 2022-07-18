@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 shadow mt-4 p-5">
+            <h4 class="text-center">Maqola yozish</h4>
+            <form method="post">
+                <input class="form-control" type="text" placeholder="Mavzu nomi">
+                <input class="form-control mt-3" type="text" placeholder="Mavzu haqida qisqacha">
+                <input class="form-control mt-3" type="file">
+                <textarea rows="6" class="form-control mt-3" type="text" placeholder="Mavzu haqida"></textarea>
+                <button class="btn btn-primary mt-3 w-100">Yubirish</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
